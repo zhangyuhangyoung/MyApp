@@ -1,0 +1,73 @@
+﻿@page
+@model MyApp.Pages.Books.OwnBookModel
+@{
+    ViewData["Title"] = "OwnBook";
+}
+
+<h1>OwnBook</h1>
+
+<h1>Book List</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+
+                    @Html.DisplayNameFor(model => model.MyBook[0].Title)
+
+            </th>
+            <th>
+                
+                    @Html.DisplayNameFor(model => model.MyBook[0].Author)
+
+            </th>
+            <th>
+                
+                    @Html.DisplayNameFor(model => model.MyBook[0].PublishedDate)
+    
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MyBook[0].Summary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MyBook[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MyBook[0].Status)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.MyBook)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublishedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Summary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Return Book</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,109 @@
+﻿@page
+@model MyApp.Pages.Books.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Book List</h1>
+
+<p>
+    <a asp-page="Create">Create New Book</a>
+</p>
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by Title:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-page="./OwnBook">Own Book</a> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+ </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.TitleSort"
+                       asp-route-currentFilter="@Model.CurrentFilter">
+                        @Html.DisplayNameFor(model => model.MyBook[0].Title)
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort"
+                       asp-route-currentFilter="@Model.CurrentFilter">
+                        @Html.DisplayNameFor(model => model.MyBook[0].Author)
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.DateSort"
+                       asp-route-currentFilter="@Model.CurrentFilter">
+                        @Html.DisplayNameFor(model => model.MyBook[0].PublishedDate)
+                    </a>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MyBook[0].Summary)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MyBook[0].Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MyBook[0].Status)
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.MyBook)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PublishedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Summary)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.ID">Check /Return</a> |
+                        <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @{
+        var prevDisabled = !Model.MyBook.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.MyBook.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-page="./Index"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-pageIndex="@(Model.MyBook.PageIndex - 1)"
+       asp-route-currentFilter="@Model.CurrentFilter"
+       class="btn btn-default @prevDisabled">
+        Previous
+    </a>
+    <a asp-page="./Index"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-pageIndex="@(Model.MyBook.PageIndex + 1)"
+       asp-route-currentFilter="@Model.CurrentFilter"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
